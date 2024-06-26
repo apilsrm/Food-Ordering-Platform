@@ -3,7 +3,7 @@ import { menu_list } from "../../assets/frontend_assets/assets"
 const ExploreMenu = ({category, setCategory}) => {
   return (
     <div className=" flex flex-col gap-5" id="explore-menu">
-      <h1 className=" text-[#121212] font-medium">Explore our menu</h1>
+      <h1 className=" text-[#121212] font-medium text-[max(2vw,24px)]">Explore our menu</h1>
       <p className=" max-w-[60%] text-[#808080]">Choose from a  diverse menu featuring a delectable array of dishes. Our mission is to satisfy your cravings and elevate your during experience, one delicious meal at a time.</p>
        <div className="flex justify-between items-center gap-7 text-center my-5 mx-0 overflow-x-scroll no-scrollbar">
         {menu_list.map((items, index)=> {

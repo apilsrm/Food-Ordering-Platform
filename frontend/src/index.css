@@ -9,6 +9,7 @@
     margin: 0;
     box-sizing: border-box;
     font-family: Outfit;
+    scroll-behavior: smooth;
 }
 body{
     min-height: 100vh;
@@ -43,5 +44,5 @@ a{
     transition: 0.3s;
 }
 .box-shadow {
-    box-shadow: 0px 0px 10px #00000015;
+    box-shadow: -5px 8px 10px 6px #00000015;
 }
