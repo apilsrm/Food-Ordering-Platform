@@ -6,7 +6,8 @@ export default {
   ],
   theme: {
     screens: {
-      'mobile': {'min': '320px', 'max': '800px'},
+      'mobile': {'max': '800px'},
+      "smobile": {'max': '430px'},
     },
     extend: {
       backgroundImage: {
