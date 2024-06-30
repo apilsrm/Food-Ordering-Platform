@@ -67,7 +67,7 @@ const removeFood = async(req,res)=> {
         await food.deleteOne();
         res.status(200).json({
             success: true,
-            message: "Product delete successfullly ",            
+            message: "Product Deleted Successfully !!",            
         })
 
     } catch (error) {
