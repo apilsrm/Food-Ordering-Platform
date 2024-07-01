@@ -21,16 +21,25 @@ const StoreContextProvider = (props) => {
   //data from database
   const [food_list, setFood_list] = useState([])
 
-  const addToCart = (itemId) => {
+  const addToCart =  async(itemId) => {
     if (!cartItems[itemId]) {
       setCardItems((prev) => ({ ...prev, [itemId]: 1 }));
     } //for first entry
     else {
       setCardItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     } //if alerady items in card
+    if(token){
+      await axios.post(url+"/api/cart/add", {itemId},{headers:{token}})
+    }
   };
-  const removeFromCart = (itemId) => {
+
+
+  //remove
+  const removeFromCart = async(itemId) => {
     setCardItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    if(token){
+      await axios.post(url+"/api/cart/remove",{itemId},{headers:{token}})
+    }
   };
 
   useEffect(() => {
@@ -54,6 +63,11 @@ const fetchFoodList = async () => {
     setFood_list(response.data.data)
 }
 
+const loadCartData = async (token) =>{
+  const response = await axios.Axios.post(url+"/api/cart/get",{},{headers:{token}});
+   setCardItems(response.data.cartData);
+}
+
 
   //save token while refresh
   useEffect(()=>{
@@ -61,6 +75,7 @@ const fetchFoodList = async () => {
        await fetchFoodList();
        if(localStorage.getItem("token")){
         setToken(localStorage.getItem("token"));
+        await loadCartData(localStorage.getItem("token"));
       }
     }
     loadData()
