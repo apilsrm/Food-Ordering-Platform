@@ -3,15 +3,15 @@ import { assets } from "../../assets/frontend_assets/assets";
 import { StoreContext } from "../../context/StoreContext";
 
 const FoodItem = ({ id, name, price, description, image }) => {
-  const { cartItems, addToCart, removeFromCart } = useContext(StoreContext);
+  const { cartItems, addToCart, removeFromCart, url } = useContext(StoreContext);
 
   return (
     <div className=" w-full mobile:w-auto  m-auto rounded-2xl box-shadow fade-in duration-150 ">
       <div className="relative ">
         <img
           className="w-full rounded-t-2xl  hover:scale-95 hover:rounded-2xl"
-          src={image}
-          alt=""
+          src={`${url}/images/${image}`}
+          alt="food image"
         />
         {!cartItems[id] ? (
           <img

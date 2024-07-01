@@ -1,5 +1,14 @@
+/**
+ * The `StoreContextProvider` component in this code manages state for a shopping cart application in
+ * React, including adding and removing items from the cart and calculating the total amount.
+ *  @returns The `StoreContextProvider` component is being returned. It is a context provider component
+ * that provides the context value containing `food_list`, `cartItems`, `setCardItems`, `addToCart`,
+ * `removeFromCart`, `getTotalCatAmount`, `url`, `token`, and `setToken` to its children components.
+ * The context value is provided through the `StoreContext.Provider` component
+ */
 import { createContext, useEffect, useState } from "react";
-import { food_list } from "../assets/frontend_assets/assets";
+// import { food_list } from "../assets/frontend_assets/assets";
+import axios from "axios";
 
 export const StoreContext = createContext(null);
 
@@ -8,6 +17,9 @@ const StoreContextProvider = (props) => {
 
   const url = "http://localhost:4000";
   const [token, setToken] = useState("");
+
+  //data from database
+  const [food_list, setFood_list] = useState([])
 
   const addToCart = (itemId) => {
     if (!cartItems[itemId]) {
@@ -35,6 +47,24 @@ const StoreContextProvider = (props) => {
     }
     return totalAmount;
   };
+ 
+//foodlist form db
+const fetchFoodList = async () => {
+  const response = await axios.get(url+"/api/food/list")
+    setFood_list(response.data.data)
+}
+
+
+  //save token while refresh
+  useEffect(()=>{
+    async function loadData(){
+       await fetchFoodList();
+       if(localStorage.getItem("token")){
+        setToken(localStorage.getItem("token"));
+      }
+    }
+    loadData()
+  },[])
 
   const contextValue = {
     food_list,
