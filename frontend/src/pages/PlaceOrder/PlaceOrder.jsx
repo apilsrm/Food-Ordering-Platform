@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
 
 const PlaceOrder = () => {
-  const { getTotalCatAmount } = useContext(StoreContext);
+  const { getTotalCatAmount, token, food_list, cartItems, url} = useContext(StoreContext);
 
   return (
     <form className="flex items-start smobile:flex-col justify-between  gap-12 mt-24">
