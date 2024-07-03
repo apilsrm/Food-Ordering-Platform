@@ -46,3 +46,13 @@ a{
 .box-shadow {
     box-shadow: -5px 8px 10px 6px #00000015;
 }
+
+@keyframes rotate {
+    100%{
+        transform: rotate(360deg);
+    }
+    
+}
+.rotates {
+    animation: rotate 1s infinite;
+}
