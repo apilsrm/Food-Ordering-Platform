@@ -1,10 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
 
 const PlaceOrder = () => {
-  const { getTotalCatAmount, token, food_list, cartItems, url } =
-    useContext(StoreContext);
+  const {getTotalCatAmount, token, food_list, cartItems, url } = useContext(StoreContext);
 
   const [data, setData] = useState({
     firstName: "",
@@ -15,7 +14,7 @@ const PlaceOrder = () => {
     state: "",
     zipcode: "",
     country: "",
-    phone: "",
+    phone: ""
   });
   const onChangeHandler = (e) => {
     const name = e.target.name;
@@ -45,7 +44,10 @@ const PlaceOrder = () => {
       amount:getTotalCatAmount()+50,
 
     }
-    let  response = await axios.post(url+"/api/order/place",orderData,{headers:{token}})
+    let response = await axios.post(url+"/api/order/place",orderData,{
+      headers:{token}
+      
+    })
     if(response.data.success){
       // console.log("sessionUrl",response.data);
       const {session_url} = response.data;

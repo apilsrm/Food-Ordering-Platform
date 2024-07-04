@@ -27,14 +27,14 @@ const Login = ({ setShowLogin }) => {
   const onLogin = async (e) => {
     e.preventDefault();
     let newUrl = url;
-    console.log("newUrl",newUrl);
+    // console.log("newUrl",newUrl);
     if (currentState === "Login") {
       newUrl += "/api/user/login";
     } else {
       newUrl += "/api/user/register";
     }
     const response = await axios.post(newUrl, data);
-    console.log("response",response);
+    // console.log("response",response);
      
     if (response.data.success) {
       setToken(response.data.token);

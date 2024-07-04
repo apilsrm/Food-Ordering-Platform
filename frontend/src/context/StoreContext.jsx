@@ -43,7 +43,7 @@ const StoreContextProvider = (props) => {
   };
 
   useEffect(() => {
-    console.log(cartItems);
+    // console.log(cartItems);s
   }, [cartItems]);
 
   const getTotalCatAmount = () => {
@@ -64,7 +64,7 @@ const fetchFoodList = async () => {
 }
 
 const loadCartData = async (token) =>{
-  const response = await axios.Axios.post(url+"/api/cart/get",{},{headers:{token}});
+  const response = await axios.post(url+"/api/cart/get",{},{headers:{token}});
    setCardItems(response.data.cartData);
 }
 

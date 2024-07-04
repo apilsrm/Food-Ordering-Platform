@@ -1,9 +1,9 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
-import { Stripe } from "stripe"
+import Stripe from "stripe"
 
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY)
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY)
 
 
 
@@ -16,7 +16,7 @@ const placeOrder = async(req,res) => {
             userId:req.body.userId,
             items:req.body.items,
             amount:req.body.amount,
-            address:req.body.address,
+            address:req.body.address
 
         })
         //save to db
@@ -27,18 +27,18 @@ const placeOrder = async(req,res) => {
      //for strike payment 
         const line_items = req.body.items.map((item)=>({
             price_data:{
-                currency:"npr",
+                currency:"usd",
                 product_data:{
                     name:item.name
                 },
-                unit_amount:item.price*100*1*133
+                unit_amount:item.price*100
             },
             quantity:item.quantity
         }))
 
         line_items.push({
             price_data:{
-                currency:"npr",
+                currency:"usd",
                 product_data:{
                     name:"Delivery Charge"
                 },
@@ -49,8 +49,8 @@ const placeOrder = async(req,res) => {
 
 
         //create seesionusing line_items
-
-        const session = await stripe.Checkout.session.create({
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types:["card"],
             line_items:line_items,
             mode:'payment',
             success_url:`${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
@@ -59,12 +59,12 @@ const placeOrder = async(req,res) => {
 
         res.status(200).json({
             success: true,
-            session_url:session.url,            
+            session_url:session.url         
         })
 
     } catch (error) {
         
-        console.log(error)
+        console.log("place order",error)
         res.status(500).json({
             success:false,
             message:"Error while place order"

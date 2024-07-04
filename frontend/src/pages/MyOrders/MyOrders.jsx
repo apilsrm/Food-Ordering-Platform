@@ -1,21 +1,49 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
+import {assets} from "../../assets/frontend_assets/assets.js"
 
 const MyOrders = () => {
-    const [data, setData] = useState([]);
-    const {url, token} = useContext(StoreContext);
+  const [data, setData] = useState([]);
+  const { url, token } = useContext(StoreContext);
 
-  const fetchOrders = async() => {
-    const response = await axios.post(url+"/api/oder/userorders",{},{headers:{token}});
-   setData(response.data.data); 
-  }
+  const fetchOrders = async () => {
+    const response = await axios.post(
+      url + "/api/order/userorders",
+      {},
+      { headers: { token } }
+    );
+    setData(response.data.data);
+    // console.log("respone form myOrder/fetch",response.data.data)
+  };
+
+  useEffect(() => {
+    if (token) {
+      fetchOrders();
+    }
+  }, [token]);
 
   return (
-    <div>
-      
-    </div>
-  )
-}
+    <div className="">
+      <h2>My Orders</h2>
+      <div className="container">
+        {data.map((order, index) => {
+          return <div key={index} className="myordersorder">
+            <img src={assets.parcel_icon} alt="" />
+            <p>{order.items.map((item,index)=> {
+              if(index === order.items.length-1){
+                return item.name+" x "+item.quantity
+              }else{
+                return item.name+" x "+item.quantity+", "
 
-export default MyOrders
+              } //last items doesnot get comma 
+            })}</p>
+            <p>${order.amount}</p>
+          </div>;
+        })}
+      </div>
+    </div>
+  );
+};
+
+export default MyOrders;

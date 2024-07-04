@@ -1,7 +1,8 @@
-import jwr from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 const authMiddleware = async (req, res, next) => {
   const { token } = req.headers;
+  // const token = req?.headers?.authorization?.replace("Bearer ", "");
   if (!token) {
     return res.json({
       success: false,

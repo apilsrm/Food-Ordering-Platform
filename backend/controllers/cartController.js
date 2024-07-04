@@ -2,10 +2,10 @@ import userModel from "../models/userModel.js";
 
 //add product to cart
 
+// let userData = await userModel.findOne({ _id: req.body.userId }); //same
 const addToCart = async (req, res) => {
   try {
-    // let userData = await userModel.findOne({ _id: req.body.userId }); //same
-    let userData = await userModel.findOne(req.body.userId); //same
+    let userData = await userModel.findById(req.body.userId)
     let cartData = await userData.cartData;
     if (!cartData[req.body.itemId]) {
       cartData[req.body.itemId] = 1;
