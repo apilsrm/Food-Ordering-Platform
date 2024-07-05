@@ -3,7 +3,8 @@ import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
 
 const PlaceOrder = () => {
-  const {getTotalCatAmount, token, food_list, cartItems, url } = useContext(StoreContext);
+  const { getTotalCatAmount, token, food_list, cartItems, url } =
+    useContext(StoreContext);
 
   const [data, setData] = useState({
     firstName: "",
@@ -14,7 +15,7 @@ const PlaceOrder = () => {
     state: "",
     zipcode: "",
     country: "",
-    phone: ""
+    phone: "",
   });
   const onChangeHandler = (e) => {
     const name = e.target.name;
@@ -39,25 +40,55 @@ const PlaceOrder = () => {
     });
     // console.log("orderItems: ", orderItems);
     let orderData = {
-      address:data,
-      items:orderItems,
-      amount:getTotalCatAmount()+50,
+      address: data,
+      items: orderItems,
+      amount: getTotalCatAmount() + 50,
+    };
 
-    }
-    let response = await axios.post(url+"/api/order/place",orderData,{
-      headers:{token}
-      
-    })
-    if(response.data.success){
-      // console.log("sessionUrl",response.data);
-      const {session_url} = response.data;
-      window.location.replace(session_url);
+    
+    try {
+      const response = await axios.post(url + "/api/order/place", orderData, {
+        headers: { token },
+      });
 
-    }
-    else{
-      alert("Error");
+      if (response.data.success) {
+        const responseData = response.data;
+        
+        // Log the responseData to debug the form fields
+        console.log("responseData:", responseData);
+
+        // Dynamically create and submit the form
+        const form = document.createElement("form");
+        form.setAttribute("method", "POST");
+        form.setAttribute("action", "https://rc-epay.esewa.com.np/api/epay/main/v2/form");
+
+
+        const keys = ["amount", "product_delivery_charge", "failure_url", "product_service_charge", "product_code", "signature", "signed_field_names", "success_url", "tax_amount", "total_amount", "transaction_uuid"];
+       
+        keys.forEach(key => {
+          if (Object.hasOwn(responseData, key)) {
+            const hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", responseData[key]);
+            form.appendChild(hiddenField);
+          }
+        });
+
+        // Append the form to the body and submit
+        document.body.appendChild(form);
+        try {
+          form.submit();
+        } catch (submitError) {
+          console.error("Form submission error:", submitError);
+        }
+      } 
+    } catch (error) {
+      console.error("Error placing order:", error);
     }
   };
+
+
   return (
     <form
       onSubmit={placeOrder}
