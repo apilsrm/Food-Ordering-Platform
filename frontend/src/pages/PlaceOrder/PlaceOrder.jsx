@@ -1,6 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const PlaceOrder = () => {
   const { getTotalCatAmount, token, food_list, cartItems, url } =
@@ -86,8 +87,17 @@ const PlaceOrder = () => {
     } catch (error) {
       console.error("Error placing order:", error);
     }
-  };
 
+  };
+ const navigate = useNavigate();
+  useEffect(()=>{
+ if(!token){
+   navigate("/cart")
+ }
+ else if (getTotalCatAmount()===0){
+  navigate("/cart")
+ }
+  },[token])
 
   return (
     <form

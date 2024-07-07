@@ -13,7 +13,7 @@ function App() {
  
 
  
-
+ const url ="http://localhost:4000"
   return (
     <>
       <div>
@@ -25,7 +25,7 @@ function App() {
           <Routes>
             <Route path="/add" element={<Add />} />
             <Route path="/list" element={<List />} />
-            <Route path="/orders" element={<Orders />} />
+            <Route path="/orders" element={<Orders url={url} />} />
           </Routes>
         </div>
       </div>

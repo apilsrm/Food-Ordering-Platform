@@ -96,7 +96,7 @@ const Navbar = ({ setShowLogin }) => {
               <li 
               className="flex items-center gap-1.5 cursor-pointer hover:text-[tomato]">
                 <img className="w-5" src={assets.bag_icon} alt="" />
-                <p>Orders</p>
+                <Link to="/myorders"><p>Orders</p></Link>
               </li>
               <hr 
               className=" h-0.5 mx-0 my-2 bg-gray-300 border-none" />
