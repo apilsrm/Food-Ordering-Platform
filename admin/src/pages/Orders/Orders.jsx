@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { assets } from "../../assets/admin_assets/assets.js";
 
-const Orders = ({ url }) => {
+// eslint-disable-next-line react/prop-types
+const Orders = ({url}) => {
   const [orders, setOrders] = useState([]);
 
   const fetchAllOrders = async () => {
@@ -29,7 +30,7 @@ const Orders = ({ url }) => {
 
   useEffect(() => {
     fetchAllOrders();
-  }, []);
+  },[]);
   return (
     <div className="orderadd ">
       <h3>Order Page</h3>

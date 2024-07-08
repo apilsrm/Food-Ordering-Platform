@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
@@ -41,7 +42,7 @@ const MyOrders = () => {
             <p>${order.amount}.00</p>
             <p>Items: {order.items.length}</p>
             <p><span className="text-red-500">&#x25cf;</span><b className="font-medium text-[#454545]">{order.status}</b></p>
-            <button className="px-0 py-3 rounded bg-red-100 mobile:text-xs hover:bg-red-200 cursor-pointer text-[#454545]">Track Order</button>
+            <button onClick={fetchOrders} className="px-0 py-3 rounded bg-red-100 mobile:text-xs hover:bg-red-200 cursor-pointer text-[#454545]">Track Order</button>
           </div>;
         })}
       </div>
